@@ -92,9 +92,11 @@ const SYSTEM_CONFIG_DEV = {
     'rxjs/*': `${APP_BASE}rxjs/*`,
     '*': `${APP_BASE}node_modules/*`
   },
+  map: { moment: `${APP_BASE}node_modules/moment/moment.js` },
   packages: {
     angular2: { defaultExtension: false },
-    rxjs: { defaultExtension: false }
+    rxjs: { defaultExtension: false },
+	app: { format: 'register', defaultExtension: 'js'}
   }
 };
 

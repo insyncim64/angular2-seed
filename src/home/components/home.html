@@ -1,10 +1,18 @@
 <h1>Howdy!</h1>
 
 <h2>
-  Gratz! <smile></smile>
+  Gratz!
 </h2>
 
 <p class="note">
   Your deployment of Angular 2 Seed worked perfectly!
   Click <em>about (above)</em> to get your reward!
+</p>
+
+<h2>ng2-bootstrap test</h2>
+<p>
+  <button type="button" name="button" (click)="addAlert()">Add Alert</button>
+</p>
+<p>
+  <alert *ngFor="#alert of alerts" [type]="alert">Test alert</alert>
 </p>
