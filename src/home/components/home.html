@@ -1,18 +1,25 @@
-<h1>Howdy!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<div class="child-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        For reward, here is a list of awesome computer scientists!
+                    </p>
 
-<h2>
-  Gratz!
-</h2>
+                    <h2>ng2-bootstrap test</h2>
+                    <p>
+                        <button type="button" name="button" class="btn btn-default" (click)="addAlert()">Add Alert</button>
+                    </p>
+                    <p>
+                        <alert *ngFor="#alert of alerts" [type]="alert">Test alert</alert>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p class="note">
-  Your deployment of Angular 2 Seed worked perfectly!
-  Click <em>about (above)</em> to get your reward!
-</p>
-
-<h2>ng2-bootstrap test</h2>
-<p>
-  <button type="button" name="button" (click)="addAlert()">Add Alert</button>
-</p>
-<p>
-  <alert *ngFor="#alert of alerts" [type]="alert">Test alert</alert>
-</p>
+</html>

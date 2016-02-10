@@ -1,14 +1,30 @@
-<p>
-  For reward, here is a list of awesome computer scientists!
-</p>
-
-<p>
-  You want more? Add them yourself!
-</p>
-<form (submit)="addName()">
-  <input [(ngModel)]="newName">
-  <button type="submit">Add</button>
-</form>
-<ul>
-  <li *ngFor="#name of list.get()">{{name}}</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<div class="child-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        For reward, here is a list of awesome computer scientists!
+                    </p>
+                    <p>
+                        You want more? Add them yourself!
+                    </p>
+                    <form (submit)="addName()">
+                        <div class="input-group col-md-10">
+                            <input class="search-query form-control" (keyup)="enterQuery($event)" [(ngModel)]="newName">
+                            <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="submit"><span class=" glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                    <ul>
+                        <li *ngFor="#name of list.get()">{{name}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

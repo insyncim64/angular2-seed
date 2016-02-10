@@ -1,1 +1,35 @@
-/* Sample asset */
+/*html {
+    background: url(img/6133364748_89f2365922_o.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}*/
+
+.child-body  {
+    padding-top: 60px;
+    font-size: 16px;
+    font-family: "Abel", Arial, sans-serif;
+    background: transparent;
+}
+
+h1 {
+    font-family: "Abel", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+}
+
+h2 {
+    font-family: "Abel", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+}
+
+/* Override B3 .panel adding a subtly transparent background */
+.panel {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.margin-base-vertical {
+    margin: 40px 0;
+}
