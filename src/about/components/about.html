@@ -20,7 +20,7 @@
                         </div>
                     </form>
                     <ul>
-                        <li *ngFor="#name of list.get()">{{name}}</li>
+                        <li *ngFor="#name of dataService.getCurrentSearchingCommunities()">{{name.name | json}} {{name.city | json}} {{name.district | json}}</li>
                     </ul>
                 </div>
             </div>

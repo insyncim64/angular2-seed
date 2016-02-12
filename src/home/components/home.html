@@ -5,17 +5,17 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 panel panel-default">
                 <div class="panel-body">
-                    <p>
-                        For reward, here is a list of awesome computer scientists!
-                    </p>
-
                     <h2>ng2-bootstrap test</h2>
-                    <p>
-                        <button type="button" name="button" class="btn btn-default" (click)="addAlert()">Add Alert</button>
-                    </p>
-                    <p>
-                        <alert *ngFor="#alert of alerts" [type]="alert">Test alert</alert>
-                    </p>
+                    <div class="panel">
+                    <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)"
+                    />
+                    <ngTable [config]="config.sorting" (tableChanged)="onChangeTable(config)" [rows]="rows" [columns]="columns"></ngTable>
+                    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+                    [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+                    (numPages)="numPages = $event">
+                    </pagination>
+                    <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
+                    </div>
                 </div>
             </div>
         </div>

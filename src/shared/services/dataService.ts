@@ -4,21 +4,22 @@ import { communityRequestUrl } from '../../shared/common/constants';
 
 @Injectable()
 export class DataService {
-    items: Array<any>;
-
+    currentSearchingCommunities: Array<any>;
     constructor(public http: Http) {
-        this.items = [
-            { name: 'Christoph Burgdorf' },
-            { name: 'Pascal Precht' },
-            { name: 'thoughtram' }
-        ];
+        this.currentSearchingCommunities = [];
     }
 
     searchCommunity(communityName: string) {
         this.http.get(communityRequestUrl + communityName)
             .subscribe(
             response => {
-                console.log(JSON.parse(response.text()));
+                var jsonArray = JSON.parse(response.text());
+                if (jsonArray.length > 0) {
+                    this.currentSearchingCommunities = [];
+                }
+                for (var i = 0; i < jsonArray.length; i++) {
+                    this.currentSearchingCommunities.push(jsonArray[i]);
+                }
                 //   localStorage.setItem('jwt', response.json().id_token);
             },
             error => {
@@ -26,9 +27,12 @@ export class DataService {
                 console.log(error.text());
             }
             );
-        return this.items;
+        return this.currentSearchingCommunities;
     }
     fetchRecords(communityId: string) {
         return true;
+    }
+    getCurrentSearchingCommunities() : Array<any> {
+        return this.currentSearchingCommunities;
     }
 }

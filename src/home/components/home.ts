@@ -1,17 +1,104 @@
-import {Component} from 'angular2/core';
-import {Alert} from 'ng2-bootstrap/ng2-bootstrap';
+import {Alert, PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {Component, OnInit} from 'angular2/core';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgIf} from 'angular2/common';
+import {NG_TABLE_DIRECTIVES} from 'ng2-table/ng2-table';
+import {TableData} from './table-data';
 
 @Component({
-  selector: 'home',
-  templateUrl: './home/components/home.html',
-  styleUrls: ['./home/components/home.css'],
-  directives: [Alert]
+    selector: 'home',
+    templateUrl: './home/components/home.html',
+    styleUrls: ['./home/components/home.css'],
+    directives: [Alert,NG_TABLE_DIRECTIVES, PAGINATION_DIRECTIVES, NgClass, NgIf, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
-export class HomeCmp {
-  public alerts: string[] = [];
-  public types = ['success', 'info', 'warning', 'danger'];
-  addAlert() {
-    let i = this.alerts.length;
-    this.alerts.push(this.types[i]);
-  }
+export class HomeCmp implements OnInit {
+    /**
+     * original datas
+     */
+    public alerts: string[] = [];
+    public types = ['success', 'info', 'warning', 'danger'];
+    /**
+     * table part
+     */
+    public rows: Array<any> = [];
+    public columns: Array<any> = [
+        { title: 'Date', name: 'date', sort: 'asc' },
+        { title: 'Name', name: 'name' },
+        { title: 'District', name: 'district' },
+        { title: 'Sold count', name: 'dailySoldCount', sort: 'asc' },
+        { title: 'Sold size', name: 'dailyTotalSize', sort: 'asc' },
+        { title: 'Sold value', name: 'dailyTotalValue', sort: 'asc' },
+        { title: 'Remained percentage', name: 'dropCount', sort: false }
+    ];
+    public page: number = 1;
+    public itemsPerPage: number = 10;
+    public maxSize: number = 5;
+    public numPages: number = 1;
+    public length: number = 0;
+    public config: any = {
+        paging: true,
+        sorting: { columns: [] },
+        filtering: { filterString: '', columnName: 'name' }
+    };
+    private data: Array<any> = TableData;
+    constructor() {
+        this.length = this.data.length;
+    }
+    addAlert() {
+        let i = this.alerts.length;
+        this.alerts.push(this.types[i]);
+    }
+    ngOnInit() {
+        this.onChangeTable(this.config, null);
+    }
+    changePage(page: any, data: Array<any> = this.data): Array<any> {
+        console.log(page);
+        let start = (page.page - 1) * page.itemsPerPage;
+        let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+        return data.slice(start, end);
+    }
+    changeSort(data: any, config: any) {
+        if (!config.sorting) {
+            return data;
+        }
+
+        // simple sorting
+        return data.sort((previous: any, current: any) => {
+            let columns = this.config.sorting.columns || [];
+            for (let i = 0; i < columns.length; i++) {
+                let columnName = columns[i].name;
+
+                if (previous[columnName] > current[columnName]) {
+                    return columns[i].sort === 'desc' ? -1 : 1;
+                }
+                if (previous[columnName] < current[columnName]) {
+                    return columns[i].sort === 'asc' ? -1 : 1;
+                }
+            }
+            return 0;
+        });
+    }
+
+    changeFilter(data: any, config: any): any {
+        if (!config.filtering) {
+            return data;
+        }
+
+        let filteredData: Array<any> = data.filter((item: any) =>
+            item[config.filtering.columnName].match(this.config.filtering.filterString));
+
+        return filteredData;
+    }
+    onChangeTable(config: any, page: any = config.paging) {
+        if (config.filtering) {
+            Object.assign(this.config.filtering, config.filtering);
+        }
+        if (config.sorting) {
+            Object.assign(this.config.sorting, config.sorting);
+        }
+
+        let filteredData = this.changeFilter(this.data, this.config);
+        let sortedData = this.changeSort(filteredData, this.config);
+        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+        this.length = sortedData.length;
+    }
 }
