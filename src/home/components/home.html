@@ -6,39 +6,35 @@
             <div class="col-md-6 col-md-offset-3 panel panel-default">
                 <div class="panel-body">
                     <h2>ng2-bootstrap test</h2>
-                    <p>
-                        <button type="button" name="button" class="btn btn-default" (click)="addAlert()">Add Alert</button>
-                    </p>
-                    <p>
-                        <alert *ngFor="#alert of alerts" [type]="alert">Test alert</alert>
-                    </p>
-                    <h2>Please search</h2>
-                    <!--<div class='container-fluid'>
-                        <h4>Static arrays</h4>
-                        <pre>Model: {{selected | json}}</pre>
-                        <input [(ngModel)]="selected" [typeahead]="statesComplex" (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadOptionField]="'name'"
-                        class="form-control">
-                        <h4>Asynchronous results</h4>
-                        <pre>Model: {{asyncSelected | json}}</pre>
-                        <input [(ngModel)]="asyncSelected" [typeahead]="getAsyncData(getContext())" (typeaheadLoading)="changeTypeaheadLoading($event)"
-                        (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
-                        [typeaheadOptionsLimit]="7" placeholder="Locations loaded with timeout" class="form-control">
-                        <div [hidden]="typeaheadLoading!==true">
-                            <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
+                    <div class='panel'>
+                        <h4>First hand results in Beijing</h4>
+                        <div class="container-fluid">
+                            <div class="btn-toolbar" role="toolbar">
+                                <button type="button" *ngFor="#entry of searchingItems" class="btn btn-default" (click)="removeItemFromSearchItems($event)">
+                                    {{entry.name}}
+                                </button>
+                            </div>
                         </div>
-                        <div [hidden]="typeaheadNoResults!==true" class="" style="">
-                            <i class="glyphicon glyphicon-remove"></i> No Results Found
+                        <div class="container-fluid panel">
+                            <input [(ngModel)]="asyncSelected" [typeahead]="getAsyncData(getContext())" (typeaheadLoading)="changeTypeaheadLoading($event)"
+                            (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                            [typeaheadOptionField]="'name'" [typeaheadOptionsLimit]="7" placeholder="Community name here"
+                            class="form-control" (keyup)="enterQuery($event)">
+                            <div [hidden]="typeaheadLoading!==true">
+                                <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
+                            </div>
+                            <div [hidden]="typeaheadNoResults!==true" class="" style="">
+                                <i class="glyphicon glyphicon-remove"></i> No Results Found
+                            </div>
                         </div>
-                    </div>-->
-                    <div class="container-fluid">
-                        <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)"
-                        />
-                        <ngTable [config]="config.sorting" (tableChanged)="onChangeTable(config)" [rows]="rows" [columns]="columns"></ngTable>
-                        <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-                        [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-                        (numPages)="numPages = $event">
-                        </pagination>
-                        <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
+                    </div>
+                    <div class="panel">
+                        <tabset removable="true" >
+                            <tab *ngFor="#tabz of searchingItems" [heading]="tabz.name" [active]="tabz.active" (select)="tabz.active = true" (deselect)="tabz.active = false"
+                            [disabled]="tabz.disabled">
+                                <fh-table [data]="searchingFhRecords[tabz.id]"></fh-table>
+                            </tab>
+                        </tabset>
                     </div>
                 </div>
             </div>

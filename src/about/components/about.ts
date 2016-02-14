@@ -23,7 +23,7 @@ export class AboutCmp {
      * @returns return whether the request is done
      */
     enterQuery(event: KeyboardEvent): boolean {
-        this.dataService.searchCommunity(this.newName);
+        this.dataService.fetchCommunities(this.newName);
         return true;
     }
 }
